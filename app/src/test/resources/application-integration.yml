@@ -1,0 +1,15 @@
+spring:
+  cloud.config.enabled: false
+  security:
+    user:
+      name: user
+      password: integration
+      roles: ACTUATOR
+
+app:
+  greeting.property: "Hello"
+  example-client.url: http://dummy
+
+management:
+  signalfx.metrics.export.enabled: false
+  endpoints.web.exposure.include: info, health, refresh, env

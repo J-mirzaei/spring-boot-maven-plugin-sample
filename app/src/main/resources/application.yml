@@ -1,0 +1,8 @@
+spring.application.name: example-app
+
+logging:
+  level:
+    ROOT: warn
+    org.example: info
+  pattern.level: '%clr(%5p) %clr([traceid=%X{traceId:-} spanid=%X{spanId:-} parentspanid=%X{parentId:-}]){green}'
+  exception-conversion-word: '%rEx{10}'

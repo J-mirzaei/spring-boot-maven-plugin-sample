@@ -1,0 +1,11 @@
+applications:
+  - name: rop-backend-generator-reference-example-stub
+    path: target/example-stub.jar
+    instances: 1
+    memory: 768M
+    disk_quota: 256M
+    buildpacks:
+      - java_buildpack_offline
+    env:
+      JAVA_OPTS: -XX:+UseG1GC -XX:MaxGCPauseMillis=100
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ } }'

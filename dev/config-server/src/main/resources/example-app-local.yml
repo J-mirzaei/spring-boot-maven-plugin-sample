@@ -1,0 +1,12 @@
+app:
+  greeting.property: "Hello"
+  example-client.url: "http://localhost:8091"
+
+management:
+  endpoints.web.exposure.include: info, health, refresh, env
+  signalfx.metrics.export.enabled: false
+
+spring.security.user:
+  name: admin
+  password: admin
+  roles: ACTUATOR

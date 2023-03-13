@@ -1,0 +1,8 @@
+{
+  "request": {
+    "url": "/cloudfoundryapplication"
+  },
+  "response": {
+    "status": 200
+  }
+}

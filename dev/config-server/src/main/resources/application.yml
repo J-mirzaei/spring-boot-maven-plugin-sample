@@ -1,0 +1,8 @@
+server.port: 8888
+
+spring:
+  application:
+    name: config-server
+    admin.jmx-name: org.springframework.boot:type=Admin,name=@project.artifactId@
+  jmx.default-domain: @project.artifactId@
+  profiles.include: native

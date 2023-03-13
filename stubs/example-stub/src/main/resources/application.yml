@@ -1,0 +1,11 @@
+spring:
+  config.activate.on-profile: local
+  application:
+    name: rop-backend-generator-reference-example-stub
+    admin.jmx-name: org.springframework.boot:type=Admin,name=@project.artifactId@
+  jmx.default-domain: @project.artifactId@
+
+http.port: 8091
+
+logging.level:
+  ROOT: info
