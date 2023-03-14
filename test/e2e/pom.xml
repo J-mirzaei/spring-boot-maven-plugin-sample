@@ -56,10 +56,75 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.bazaarvoice.maven.plugins</groupId>
+                    <artifactId>process-exec-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>start-config-sever</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                            <configuration>
+                                <name>config-server</name>
+                                <workingDir>../../../dev/config-server</workingDir>
+                                <waitForInterrupt>false</waitForInterrupt>
+                                <healthcheckUrl>http://localhost:8888/actuator/health</healthcheckUrl>
+                                <arguments>
+                                    <argument>mvn</argument>
+                                    <argument>spring-boot:run</argument>
+                                    <argument>-Dspring-boot.run.profiles=local</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>start-example-stub</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                            <configuration>
+                                <name>stub-app</name>
+                                <workingDir>../../../stubs/example-stub</workingDir>
+                                <waitForInterrupt>false</waitForInterrupt>
+                                <healthcheckUrl>http://localhost:8091/health</healthcheckUrl>
+                                <arguments>
+                                    <argument>mvn</argument>
+                                    <argument>spring-boot:run</argument>
+                                    <argument>-Dspring-boot.run.profiles=local</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>start-main</id>
+                            <phase>pre-integration-test</phase>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                            <configuration>
+                                <name>man-app</name>
+                                <workingDir>../../../app</workingDir>
+                                <waitForInterrupt>false</waitForInterrupt>
+                                <healthcheckUrl>http://localhost:8080/actuator/health</healthcheckUrl>
+                                <arguments>
+                                    <argument>mvn</argument>
+                                    <argument>spring-boot:run</argument>
+                                    <argument>-Dspring-boot.run.profiles=local</argument>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>stop-all</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>stop-all</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
@@ -76,41 +141,18 @@
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>net.masterthought</groupId>
-                    <artifactId>maven-cucumber-reporting</artifactId>
-                    <version>5.6.2</version>
-                    <executions>
-                        <execution>
-                            <id>reporting</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                            <configuration>
-                                <projectName>${project.name}</projectName>
-                                <outputDirectory>${project.build.directory}/cucumber</outputDirectory>
-                                <jsonFiles>
-                                    <jsonFile>report.json</jsonFile>
-                                </jsonFiles>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
     <profiles>
         <profile>
             <id>e2e-test</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>com.bazaarvoice.maven.plugins</groupId>
+                        <artifactId>process-exec-maven-plugin</artifactId>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
